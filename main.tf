@@ -1,14 +1,20 @@
-# 1. Configure the AWS Provider
+# multiple region terraform deployment
+provider "aws"{
+	alias = "first_region"
+	region = "us-east-1"
+}
 provider "aws" {
-  region = "ap-south-1" # Change to your preferred region
+	alias = "us-west-2"
+	region = "us-west-2"
+}
+resource "aws_instance" "example" {
+	ami = "ami-0eb38b817b93460ac"
+	instance_type = "t3.micro"
+	provider = "aws.first_region"
 }
 
-# 2. Define the EC2 Instance
-resource "aws_instance" "example_server" {
-  ami           = "ami-07a00cf47dbbc844c" # ubuntu 20.04 LTS in ap-south-1
-  instance_type = "t3.micro"             # Free-tier eligible type
-
-  tags = {
-    Name = "TerraformExampleInstance"
-  }
+resource "aws_instance" "ex" {
+	ami = "ami-0d43f0bb92e485897"
+	instance_type = "t3.micro"
+	provider = "aws.us-west-2"
 }
