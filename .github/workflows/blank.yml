@@ -20,7 +20,7 @@ jobs:
              -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
              -v ${{ github.workspace }}:/app \
              formycore/aws-terraform:latest \
-             bash -c "terraform destroy"           
+             bash -c "terrform init && terraform destroy"           
 
 
       # - name: Run Terraform inside container
